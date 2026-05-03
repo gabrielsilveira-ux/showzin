@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getPostBySlug } from '@/lib/repos/posts';
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

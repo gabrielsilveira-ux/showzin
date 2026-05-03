@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getEventBySlug } from '@/lib/repos/events';
 
 export default async function EventoDetalhe({ params }: { params: Promise<{ slug: string }> }) {
