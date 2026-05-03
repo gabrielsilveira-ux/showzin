@@ -5,27 +5,28 @@ Portal de descoberta de shows e eventos com blog no domínio principal, preparad
 ## Stack
 - Next.js (App Router)
 - TypeScript
-
-## Estrutura
-- `app/` rotas públicas + admin MVP
-- `components/` componentes de UI reutilizáveis
-- `lib/` dados mock e utilitários
+- PostgreSQL + Prisma
 
 ## Rodar localmente
 ```bash
 npm install
+cp .env.example .env.local
+npm run prisma:generate
+npm run prisma:migrate
 npm run dev
 ```
 
-## Login Admin (MVP)
-Defina no `.env.local`:
+## Variáveis de ambiente
 ```bash
+DATABASE_URL="postgresql://user:pass@host:5432/showzin"
 ADMIN_USER=admin
 ADMIN_PASS=admin123
 ```
+
+## Login Admin
 Acesse `/login` para autenticar e entrar no painel.
 
-## Próximos passos
-- Integrar banco PostgreSQL
-- Implementar autenticação robusta (NextAuth/Clerk)
-- Conectar programa de afiliados
+## Status do MVP
+- Admin protegido por login
+- APIs admin protegidas por middleware
+- Persistência de eventos e posts em PostgreSQL via Prisma

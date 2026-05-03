@@ -1,19 +1,12 @@
 import { NextResponse } from 'next/server';
-import { store } from '@/lib/store';
+import { createPost, listPosts } from '@/lib/repos/posts';
 
 export async function GET() {
-  return NextResponse.json(store.posts);
+  return NextResponse.json(await listPosts());
 }
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const item = {
-    slug: body.slug,
-    title: body.title,
-    excerpt: body.excerpt,
-    city: body.city || undefined,
-    publishedAt: body.publishedAt
-  };
-  store.posts.unshift(item);
+  const item = await createPost(body);
   return NextResponse.json(item, { status: 201 });
 }

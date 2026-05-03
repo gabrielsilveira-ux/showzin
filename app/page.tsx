@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import { store } from '@/lib/store';
+import { listEvents } from '@/lib/repos/events';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const events = await listEvents();
   return (
     <section>
       <h2>Portal de shows e eventos</h2>
       <p>Filtro MVP por cidade/estado/gênero com priorização por data próxima será integrado ao backend.</p>
-      {store.events.map((event) => (
+      {events.map((event) => (
         <article className="card" key={event.slug}>
           <h3>{event.title}</h3>
           <p>{event.city.toUpperCase()} - {event.state.toUpperCase()} · {event.genre}</p>

@@ -1,8 +1,8 @@
-import { store } from '@/lib/store';
+import { getEventBySlug } from '@/lib/repos/events';
 
 export default async function EventoDetalhe({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const event = store.events.find((e) => e.slug === slug);
+  const event = await getEventBySlug(slug);
   if (!event) return <p>Evento não encontrado.</p>;
   return (
     <article className="card">
