@@ -1,11 +1,21 @@
 import { db } from '@/lib/db';
 
 export async function listEvents() {
-  return db.event.findMany({ orderBy: { date: 'asc' } });
+  try {
+    return await db.event.findMany({ orderBy: { date: 'asc' } });
+  } catch (error) {
+    console.error('listEvents error', error);
+    return [];
+  }
 }
 
 export async function getEventBySlug(slug: string) {
-  return db.event.findUnique({ where: { slug } });
+  try {
+    return await db.event.findUnique({ where: { slug } });
+  } catch (error) {
+    console.error('getEventBySlug error', error);
+    return null;
+  }
 }
 
 export async function createEvent(input: {
