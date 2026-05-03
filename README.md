@@ -28,13 +28,21 @@ ADMIN_PASS=admin123
 Acesse `/login` para autenticar e entrar no painel.
 
 ## Erros comuns ao salvar no admin
-- `Falha ao salvar ... Verifique DATABASE_URL e migrations do Prisma`:
-  - confirme `DATABASE_URL` na Vercel (Preview e Production)
-  - rode `npm run prisma:deploy`
+- `Sem conexão com o banco...`:
+  - em **Vercel > Settings > Environment Variables**, adicione `DATABASE_URL` também em **Preview** (não só Production)
+  - depois faça Redeploy
+- `Tabela Event/Post não encontrada...`:
+  - rode `npm run prisma:deploy` no mesmo banco usado pela Vercel
 - `Slug já existe`:
   - use slug diferente para novo evento/post
 - `URL oficial deve começar com http:// ou https://`:
   - preencha URL completa (ex: `https://site.com/ingressos`)
+
+## Sequência recomendada para Vercel
+1. Configurar `DATABASE_URL`, `ADMIN_USER`, `ADMIN_PASS` em Production e Preview.
+2. Rodar migrations no banco: `npm run prisma:deploy`.
+3. Popular com exemplos: `npm run prisma:seed`.
+4. Redeploy e testar em `/admin/eventos` e `/admin/blog`.
 
 ## Status do MVP
 - Admin protegido por login
