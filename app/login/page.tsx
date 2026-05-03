@@ -1,13 +1,18 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { FormEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const params = useSearchParams();
-  const next = params.get('next') || '/admin';
   const [error, setError] = useState('');
+  const [nextPath, setNextPath] = useState('/admin');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setNextPath(params.get('next') || '/admin');
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,7 +27,7 @@ export default function LoginPage() {
       setError('Credenciais inválidas');
       return;
     }
-    router.push(next);
+    router.push(nextPath);
     router.refresh();
   }
 
