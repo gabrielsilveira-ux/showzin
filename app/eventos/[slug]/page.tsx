@@ -1,8 +1,8 @@
-import { events } from '@/lib/data';
+import { store } from '@/lib/store';
 
 export default async function EventoDetalhe({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const event = events.find((e) => e.slug === slug);
+  const event = store.events.find((e) => e.slug === slug);
   if (!event) return <p>Evento não encontrado.</p>;
   return (
     <article className="card">

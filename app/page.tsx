@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { events } from '@/lib/data';
+import { store } from '@/lib/store';
 
 export default function HomePage() {
   return (
     <section>
       <h2>Portal de shows e eventos</h2>
       <p>Filtro MVP por cidade/estado/gênero com priorização por data próxima será integrado ao backend.</p>
-      {events.map((event) => (
+      {store.events.map((event) => (
         <article className="card" key={event.slug}>
           <h3>{event.title}</h3>
           <p>{event.city.toUpperCase()} - {event.state.toUpperCase()} · {event.genre}</p>
