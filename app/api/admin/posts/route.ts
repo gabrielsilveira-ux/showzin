@@ -6,7 +6,16 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const body = await req.json();
-  const item = await createPost(body);
-  return NextResponse.json(item, { status: 201 });
+  try {
+    const body = await req.json();
+    const required = ['slug', 'title', 'excerpt', 'publishedAt'];
+    for (const field of required) {
+      if (!body[field]) return NextResponse.json({ error: `Campo obrigatório: ${field}` }, { status: 400 });
+    }
+    const item = await createPost(body);
+    return NextResponse.json(item, { status: 201 });
+  } catch (error) {
+    console.error('POST /api/admin/posts', error);
+    return NextResponse.json({ error: 'Falha ao salvar post. Verifique DATABASE_URL e migrations do Prisma.' }, { status: 500 });
+  }
 }
