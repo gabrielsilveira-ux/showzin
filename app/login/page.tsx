@@ -32,14 +32,19 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="card">
-      <h2>Login Admin</h2>
-      <form onSubmit={onSubmit}>
-        <input name="user" placeholder="Usuário" required />
-        <input name="pass" type="password" placeholder="Senha" required />
-        <button type="submit">Entrar</button>
-      </form>
-      {error && <p>{error}</p>}
+    <section style={{ padding: '40px 0' }}>
+      <div className="card" style={{ maxWidth: 440, margin: '0 auto' }}>
+        <h2>Entrar no admin</h2>
+        <p className="meta">Use as credenciais configuradas em ADMIN_USER e ADMIN_PASS.</p>
+        <form onSubmit={onSubmit}>
+          <label>Usuário</label>
+          <input name="user" placeholder="Usuário" required />
+          <label>Senha</label>
+          <input name="pass" type="password" placeholder="Senha" required />
+          <button type="submit">Entrar</button>
+        </form>
+        {error && <p className="notice-error">{error}</p>}
+      </div>
     </section>
   );
 }

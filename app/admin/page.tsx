@@ -14,12 +14,25 @@ export default function AdminPage() {
 
   return (
     <section>
-      <h2>Painel administrativo (MVP)</h2>
-      <ul>
-        <li><Link href="/admin/eventos">Gerenciar eventos</Link></li>
-        <li><Link href="/admin/blog">Gerenciar posts</Link></li>
-      </ul>
-      <button type="button" onClick={logout}>Sair</button>
+      <div className="hero">
+        <h1>Painel administrativo</h1>
+        <p>Cadastre eventos e posts para publicar instantaneamente no portal.</p>
+      </div>
+      <div className="grid">
+        <article className="card">
+          <h3>Eventos</h3>
+          <p className="meta">Cadastrar agenda, links oficiais e local.</p>
+          <Link className="btn" href="/admin/eventos">Gerenciar eventos</Link>
+        </article>
+        <article className="card">
+          <h3>Blog</h3>
+          <p className="meta">Publicar guias e conteúdo SEO por cidade.</p>
+          <Link className="btn" href="/admin/blog">Gerenciar posts</Link>
+        </article>
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <button type="button" onClick={logout}>Sair</button>
+      </div>
     </section>
   );
 }
