@@ -1,17 +1,23 @@
 import { db } from '@/lib/db';
+import { posts as samplePosts } from '@/lib/data';
 
 export async function listPosts() {
   try {
-    return await db.post.findMany({ orderBy: { publishedAt: 'desc' } });
+    const dbPosts = await db.post.findMany({ orderBy: { publishedAt: 'desc' } });
+    if (dbPosts.length > 0) return dbPosts;
+    return samplePosts.map((post) => ({ ...post, publishedAt: new Date(post.publishedAt) }));
   } catch (error) {
     console.error('listPosts error', error);
-    return [];
+    return samplePosts.map((post) => ({ ...post, publishedAt: new Date(post.publishedAt) }));
   }
 }
 
 export async function getPostBySlug(slug: string) {
   try {
-    return await db.post.findUnique({ where: { slug } });
+    const dbPost = await db.post.findUnique({ where: { slug } });
+    if (dbPost) return dbPost;
+    const sample = samplePosts.find((item) => item.slug === slug);
+    return sample ? { ...sample, publishedAt: new Date(sample.publishedAt) } : null;
   } catch (error) {
     console.error('getPostBySlug error', error);
     return null;

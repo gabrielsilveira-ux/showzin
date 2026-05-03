@@ -1,30 +1,15 @@
-export type EventItem = {
-  slug: string;
-  title: string;
-  city: string;
-  state: string;
-  genre: string;
-  date: string;
-  venue: string;
-  officialUrl: string;
-};
+import { PrismaClient } from '@prisma/client';
 
-export type BlogPost = {
-  slug: string;
-  title: string;
-  excerpt: string;
-  city?: string;
-  publishedAt: string;
-};
+const prisma = new PrismaClient();
 
-export const events: EventItem[] = [
+const events = [
   {
     slug: 'festival-indie-campinas-2026',
     title: 'Festival Indie Campinas 2026',
     city: 'Campinas',
     state: 'SP',
     genre: 'Rock',
-    date: '2026-07-19T15:00:00-03:00',
+    date: new Date('2026-07-19T15:00:00-03:00'),
     venue: 'Largo do Rosário',
     officialUrl: 'https://example.com/ingressos/festival-indie-campinas-2026'
   },
@@ -34,7 +19,7 @@ export const events: EventItem[] = [
     city: 'Jundiaí',
     state: 'SP',
     genre: 'Sertanejo',
-    date: '2026-08-02T20:30:00-03:00',
+    date: new Date('2026-08-02T20:30:00-03:00'),
     venue: 'Parque da Uva',
     officialUrl: 'https://example.com/ingressos/noite-sertaneja-jundiai-2026'
   },
@@ -44,32 +29,47 @@ export const events: EventItem[] = [
     city: 'Ribeirão Preto',
     state: 'SP',
     genre: 'Eletrônico',
-    date: '2026-08-15T16:00:00-03:00',
+    date: new Date('2026-08-15T16:00:00-03:00'),
     venue: 'Arena Independência',
     officialUrl: 'https://example.com/ingressos/sunset-eletronico-ribeirao-preto-2026'
   }
 ];
 
-export const posts: BlogPost[] = [
+const posts = [
   {
     slug: 'shows-em-campinas-maio-2026',
     title: 'Shows em Campinas em maio de 2026: guia rápido',
     excerpt: 'Seleção de eventos próximos com dicas de hospedagem e deslocamento.',
     city: 'Campinas',
-    publishedAt: '2026-05-01'
+    publishedAt: new Date('2026-05-01')
   },
   {
     slug: 'o-que-fazer-em-jundiai-fim-de-semana',
     title: 'O que fazer em Jundiaí no fim de semana',
     excerpt: 'Roteiro com eventos, restaurantes e opções de hospedagem para curtir a cidade.',
     city: 'Jundiaí',
-    publishedAt: '2026-05-03'
+    publishedAt: new Date('2026-05-03')
   },
   {
     slug: 'agenda-musical-interior-sp-agosto-2026',
     title: 'Agenda musical do interior de SP em agosto de 2026',
     excerpt: 'Resumo dos principais shows do mês com links oficiais e sugestões de viagem.',
     city: 'São Paulo',
-    publishedAt: '2026-05-05'
+    publishedAt: new Date('2026-05-05')
   }
 ];
+
+async function main() {
+  await prisma.event.createMany({ data: events, skipDuplicates: true });
+  await prisma.post.createMany({ data: posts, skipDuplicates: true });
+  console.log('Seed concluído com sucesso.');
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
