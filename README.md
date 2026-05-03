@@ -17,7 +17,15 @@ npm install
 npm run dev
 ```
 
+## Login Admin (MVP)
+Defina no `.env.local`:
+```bash
+ADMIN_USER=admin
+ADMIN_PASS=admin123
+```
+Acesse `/login` para autenticar e entrar no painel.
+
 ## Próximos passos
 - Integrar banco PostgreSQL
-- Implementar autenticação admin
+- Implementar autenticação robusta (NextAuth/Clerk)
 - Conectar programa de afiliados
